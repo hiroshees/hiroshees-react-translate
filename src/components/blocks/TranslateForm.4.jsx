@@ -44,18 +44,6 @@ export const TranslateForm = ({ prices }) => {
         }
       });
       setToText(result);
-
-      dispatch({
-        type: 'save',
-        payload: {
-          data: {
-            fromText,
-            toText: result,
-            fromLang: lang.fromLang,
-            toLang: lang.toLang,
-          },
-        },
-      });
     })();
   };
 

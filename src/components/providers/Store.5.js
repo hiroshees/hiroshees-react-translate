@@ -22,26 +22,6 @@ const saveTextList = (state, action) => {
   };
 };
 
-const deleteTextList = (state, action) => {
-  const { id } = action.payload;
-  return {
-    ...state,
-    textlist: state.textlist.filter((t) => t.id !== id),
-  };
-};
+const deleteTextList = (state, action) => {};
 
-const changeStar = (state, action) => {
-  const { id } = action.payload;
-  return {
-    ...state,
-    textlist: state.textlist.map((t) => {
-      if (t.id == id) {
-        return {
-          ...t,
-          isStar: !t.isStar,
-        };
-      }
-      return t;
-    }),
-  };
-};
+const changeStar = (state, action) => {};

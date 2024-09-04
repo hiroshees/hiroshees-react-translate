@@ -30,35 +30,6 @@ export const TranslateForm = ({ prices }) => {
     }));
   };
 
-  const handleOnClickTranslate = (e) => {
-    (async () => {
-      if (fromText === '') {
-        setToText('');
-        return;
-      }
-      const data = await getTranslate(fromText, lang.fromLang, lang.toLang);
-      let result = data.responseData.translatedText;
-      data.matches.forEach((data) => {
-        if (data.id === 0) {
-          result = data.translation;
-        }
-      });
-      setToText(result);
-
-      dispatch({
-        type: 'save',
-        payload: {
-          data: {
-            fromText,
-            toText: result,
-            fromLang: lang.fromLang,
-            toLang: lang.toLang,
-          },
-        },
-      });
-    })();
-  };
-
   return (
     <Container maxWidth="sm" sx={{ my: 5 }}>
       <Stack
@@ -99,11 +70,7 @@ export const TranslateForm = ({ prices }) => {
             </Select>
           </FormControl>
         </Box>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleOnClickTranslate}
-        >
+        <Button variant="contained" color="secondary">
           翻訳
           <ArrowForwardIosIcon fontSize="small" />
         </Button>

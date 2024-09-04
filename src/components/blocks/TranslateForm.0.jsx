@@ -11,54 +11,6 @@ import { getTranslate } from '../providers/TranslateAPI';
 import { countries } from './Countries';
 
 export const TranslateForm = ({ prices }) => {
-  const dispatch = useContext(DispatchContext);
-  const [fromText, setFromText] = useState('りんご');
-  const [toText, setToText] = useState('');
-  const [lang, setLang] = useState({
-    fromLang: 'ja-JP',
-    toLang: 'en-US',
-  });
-
-  const handleOnChangeWord = (e) => {
-    setFromText(() => e.target.value);
-  };
-
-  const handleOnChangeLang = (e) => {
-    setLang((lang) => ({
-      ...lang,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleOnClickTranslate = (e) => {
-    (async () => {
-      if (fromText === '') {
-        setToText('');
-        return;
-      }
-      const data = await getTranslate(fromText, lang.fromLang, lang.toLang);
-      let result = data.responseData.translatedText;
-      data.matches.forEach((data) => {
-        if (data.id === 0) {
-          result = data.translation;
-        }
-      });
-      setToText(result);
-
-      dispatch({
-        type: 'save',
-        payload: {
-          data: {
-            fromText,
-            toText: result,
-            fromLang: lang.fromLang,
-            toLang: lang.toLang,
-          },
-        },
-      });
-    })();
-  };
-
   return (
     <Container maxWidth="sm" sx={{ my: 5 }}>
       <Stack
@@ -75,8 +27,6 @@ export const TranslateForm = ({ prices }) => {
             id="from-text"
             label="翻訳前の言葉"
             sx={{ backgroundColor: '#ffffff' }}
-            value={fromText}
-            onChange={handleOnChangeWord}
           />
           <FormControl sx={{ my: 2 }} fullWidth size="small">
             <InputLabel id="from-text-input-label">翻訳前の言語</InputLabel>
@@ -86,8 +36,6 @@ export const TranslateForm = ({ prices }) => {
               id="fromLang"
               name="fromLang"
               sx={{ backgroundColor: '#ffffff' }}
-              value={lang.fromLang}
-              onChange={handleOnChangeLang}
             >
               {Object.keys(countries).map((key) => {
                 return (
@@ -99,11 +47,7 @@ export const TranslateForm = ({ prices }) => {
             </Select>
           </FormControl>
         </Box>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleOnClickTranslate}
-        >
+        <Button variant="contained" color="secondary">
           翻訳
           <ArrowForwardIosIcon fontSize="small" />
         </Button>
@@ -115,7 +59,6 @@ export const TranslateForm = ({ prices }) => {
             rows={6}
             variant="outlined"
             sx={{ backgroundColor: '#ffffff' }}
-            value={toText}
           />
           <FormControl sx={{ my: 2 }} fullWidth size="small">
             <InputLabel id="to-text-input-label">翻訳後の言語</InputLabel>
@@ -125,8 +68,6 @@ export const TranslateForm = ({ prices }) => {
               id="toLang"
               name="toLang"
               sx={{ backgroundColor: '#ffffff' }}
-              value={lang.toLang}
-              onChange={handleOnChangeLang}
             >
               {Object.keys(countries).map((key) => {
                 return (
